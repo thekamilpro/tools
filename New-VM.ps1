@@ -1,7 +1,8 @@
 #Script to create a new VM in Hyper-V
-
+param {
 [string]$VmName = Read-Host -Prompt 'Provide the name'
 [string]$PathToISO = 'L:\Software\ISO\Server 2012 R2.ISO'
+}
 
 #Create VM
 New-VM  -Name $VmName -MemoryStartupBytes 2GB -Generation 2 -Path D:\VM\$VmName -SwitchName Internal -NewVHDSizeBytes 60GB -NewVHDPath D:\VM\$VmName\$VmName.vhdx
