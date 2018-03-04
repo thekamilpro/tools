@@ -1,4 +1,21 @@
-#The idea is to use powershell to interact andgenerate password links
+<#
+.SYNOPSIS
+Pushes the password to pwpush.com and retrieves the link.
+
+.DESCRIPTION
+
+The idea behind the https://pwpush.com is to create links with password which will expire after specific time - therefore password are not left in clear text in email forever.
+
+The Push-PWPush will generate the link with the password provided, or will generate random number as the password, if no password is provided.
+
+
+.NOTES
+Password requires Internet Explorer to work. Things which are going to be added:
+- Custom link expriration
+- More sophisticate random password
+- Customised settings for random password
+
+#>
 
 [string]$Password = Read-Host "Type password or leave blank for random"
 
