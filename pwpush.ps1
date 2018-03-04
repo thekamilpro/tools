@@ -4,7 +4,7 @@ $IE = New-Object -ComObject "InternetExplorer.Application"
 
 $RequestURI = "https://pwpush.com"
 $Password = "password_payload";
-$SubmitButton = "submit";
+$SubmitButton = "commit";
 
 $IE.Visible = $true
 $IE.Silent = $true
@@ -16,12 +16,23 @@ While ($IE.Busy) {
 $Doc = $IE.Document
 $Doc.getElementsByTagName("input") | ForEach-Object {
     if ($_.id -ne $null){
-        if ($_.id.contains($SubmitButton)) {$SubmitButton = $_}
         if ($_.id.contains($Password)) {$Password = $_}
+    }
+    if ($_.name -ne $null){
+        if ($_.name.contains($commit)) {$SubmitButton = $_}
     }
 }
 
 $Password.value = "1234"
+Start-sleep -Seconds 1
 $SubmitButton.click()
 
-Invoke-WebRequest https://pwpush.com/assets/application-cdd96c030d1ee817dae58ac877bd0213c8ea2859b1395e7bd83ceb37dadf5bb5.js
+$PasswordURL = 'value'
+
+$Doc.getElementsByTagName("input") | ForEach-Object {
+    if ($_.value -ne $null){
+        if ($_.value.contains($PasswordURL)) {$PasswordURL = $_}
+    }
+}
+$PasswordURL.value
+Start-Sleep -Seconds 1
