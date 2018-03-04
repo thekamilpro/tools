@@ -2,7 +2,6 @@
 
 [string]$Password = Read-Host "Type password or leave blank for random"
 
-
 If (!$Password) {$Password = (Get-Random)}
 
 Write-Host "Using password: $Password"
