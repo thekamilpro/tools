@@ -4,14 +4,12 @@ $IE = New-Object -ComObject "InternetExplorer.Application"
 
 $RequestURI = "https://pwpush.com"
 $Password = "password_payload";
-$SubmitButton = "commit";
 
-$IE.Visible = $true
+$IE.Visible = $false
 $IE.Silent = $true
 $IE.Navigate($RequestURI)
-While ($IE.Busy) {
-    Start-Sleep -Milliseconds 100
-}
+
+While ($IE.Busy) {Start-Sleep -Seconds 1}
 
 $Doc = $IE.Document
 $Doc.getElementsByTagName("input") | ForEach-Object {
@@ -27,12 +25,14 @@ $Password.value = "1234"
 Start-sleep -Seconds 1
 $SubmitButton.click()
 
-$PasswordURL = 'value'
+While ($IE.Busy) {Start-Sleep -Seconds 1}
+
+$URL = "url"
 
 $Doc.getElementsByTagName("input") | ForEach-Object {
-    if ($_.value -ne $null){
-        if ($_.value.contains($PasswordURL)) {$PasswordURL = $_}
+    if ($_.id -ne $null){
+        if ($_.id.contains($URL)) {$URL = $_}
     }
 }
-$PasswordURL.value
-Start-Sleep -Seconds 1
+$Password.value
+$URL.value
