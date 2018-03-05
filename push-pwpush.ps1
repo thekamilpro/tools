@@ -17,7 +17,9 @@ Password requires Internet Explorer to work. Things which are going to be added:
 
 #>
 
-[string]$Password = Read-Host "Type password or leave blank for random"
+[string]$Password   = Read-Host "Type password or leave blank for random"
+[string]$Expire     = 10 #liimit 1-90
+[string]$Views      = 90 #limit 1-100
 
 If (!$Password) {$Password = (Get-Random)}
 
@@ -34,19 +36,25 @@ $IE.Navigate($RequestURI)
 
 While ($IE.Busy) {Start-Sleep -Seconds 1}
 
-$Payload = "password_payload";
+$Payload        = "password_payload"
+$ExpireID       = "password_expire_after_days"
+$ViewsID        = "password_expire_after_views"
 
 $Doc = $IE.Document
 $Doc.getElementsByTagName("input") | ForEach-Object {
     if ($_.id -ne $null){
         if ($_.id.contains($Payload)) {$Payload = $_}
+        if ($_.id.contains($ExpireID)) {$ExpireID = $_}
+        if ($_.id.contains($ViewsID)) {$ViewsID = $_}
     }
     if ($_.name -ne $null){
         if ($_.name.contains($commit)) {$SubmitButton = $_}
     }
 }
 
-$Payload.value = $Password
+$Payload.value  =    $Password
+$ExpireID.value =   $Expire
+$ViewsID.value  =   $Views
 Start-sleep -Seconds 1
 $SubmitButton.click()
 
