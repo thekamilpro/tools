@@ -16,10 +16,10 @@ Number of days after which the link expires. Default value is 7 days. Allowed va
 Number of views after which the link expires. Default value is 5 views. Allowed values: 1-100
 .EXAMPLE 
 Generates a random password with default settings.
-.\push-pwpush.ps1
+.\Get-PasswordLink.ps1
 .EXAMPLE
 Pushes password "Passw0rd!" which will expire either after 14 days or 2 views, whichever comes sooner.
-.\push-pwpush.ps1 -Password Passw0rd! -Expire 14 -Views 2
+.\Get-PasswordLink.ps1 -Password Passw0rd! -Expire 14 -Views 2
 #>
 [CmdletBinding()]
 
