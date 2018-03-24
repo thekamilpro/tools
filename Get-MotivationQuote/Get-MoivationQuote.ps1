@@ -39,8 +39,10 @@ function Remove-ChromeDriver {
     Remove-Item "$PSScriptRoot\dist*" -Recurse
 } 
 
-Remove-ChromeDriver
+
 
 If (-not(Test-Path -Path $PSScriptRoot\chromedriver.exe)) {Get-ChromeDriver}
 
 Get-WebDriver -Verbose
+
+Remove-ChromeDriver
