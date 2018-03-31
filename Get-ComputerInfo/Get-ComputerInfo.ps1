@@ -1,3 +1,11 @@
+[CmdletBinding()]
+
+Param(
+    [Parameter(Position=1)]
+    $ComputerName = "localhost"
+)
+
+function Get-ComputerInfo {
 #ComputerSystem
 $Hostname = Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Name
 $Manufacturer = Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Manufacturer
@@ -8,7 +16,7 @@ $SystemDrive = $SystemDrive.SystemDrive
 $SystemDrive = Get-CimInstance -ClassName Win32_LogicalDisk -filter "Name like '$SystemDrive'"
 $BuildNumber = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object BuildNumber
 $BootTime = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object LastBootUpTime
-$Version = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object Version
+$Version = Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object Caption
 #Processpr
 $CPUName = Get-CimInstance -ClassName Win32_Processor |  Select-Object Name
 $CPUID = Get-CimInstance -ClassName Win32_Processor |  Select-Object DeviceID
@@ -23,11 +31,14 @@ $Results = New-Object -TypeName psobject -Property @{
     SystemDrive = $SystemDrive
     BuildNumber = $BuildNumber.BuildNumber
     BootTime = $BootTime.LastBootUpTime
-    Version = $Version.Version
+    OS = $Version.Caption
     CPUName = $CPUName.Name
     CPUID = $CPUID.DeviceID
     CPUCores = $CPUCores.NumberOfCores
-    IP = $IP
+    IP = $IP.IPv4Address
 }
 
-$Results | Select-Object Hostname,Manufacturer,Model,SystemDrive,BuildNumber,BootTime,Version,CPUName,CPUID,CPUCores,IP | Format-List
+$Results | Select-Object Hostname,Manufacturer,Model,SystemDrive,BuildNumber,BootTime,OS,CPUName,CPUID,CPUCores,IP
+}
+
+If ($ComputerName -eq "localhost") {Get-ComputerInfo} ELSE {Invoke-Command -FilePath $PSCommandPath -ComputerName $ComputerName}
