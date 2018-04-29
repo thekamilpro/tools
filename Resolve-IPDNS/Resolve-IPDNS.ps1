@@ -1,4 +1,33 @@
 function Resolve-IPDNS {
+<#
+.SYNOPSIS
+Resolves IPv4 address to DNS, or DNS to IPv4.  
+
+.DESCRIPTION
+This command uses either IPv4 or DNS name to resolve each. It puts all the data into
+structured table, which can be easilly exported if needed. By defaults it's using 
+1.1.1.1 DNS server.
+
+.PARAMETER IPDNS
+One or more IPs or DNS names. Values can be piped.
+
+.PARAMETER DNSServer
+Specifies which DNS server will resolve all the queries.
+
+.EXAMPLE
+Resolve-IPDNS -IPDNS bbc.com,8.8.8.8
+Resolves "bbc.com" and "8.8.8.8" returning their retrospective addresses. 
+
+.EXAMPLE
+(Get-Content C:\temp\test.txt) | Resolve-IPDNS
+This example will try to resolve all entries from the file
+
+.NOTES
+Createad by Kamil Procyszyn
+last updated April 2018
+https://kamilpro.com
+#>    
+    
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true,ValueFromPipeline = $true)]
