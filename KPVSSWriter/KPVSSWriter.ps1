@@ -1,4 +1,4 @@
-function Get-VSSWriter {
+function Get-KPVSSWriter {
     [CmdletBinding()]
 
     Param (
@@ -51,7 +51,7 @@ function Get-VSSWriter {
 
 }#function
 
-function Restart-VSSWriter {
+function Restart-KPVSSWriter {
     [CmdletBinding()]
 
     Param (
