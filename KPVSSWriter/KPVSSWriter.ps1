@@ -7,16 +7,18 @@ function Get-KPVSSWriter {
         $Status
     ) #Param
 
-    BEGIN { } #BEGIN
+    BEGIN { Write-Verbose "BEGIN: Get-KPVSSWriter"} #BEGIN
 
     PROCESS {
         
         #Command to retrieve all writers, and split them into groups
+        Write-Verbose "Retrieving VSS Writers"
         VSSAdmin list writers | 
         Select-String -Pattern 'Writer name:' -Context 0, 4 |
         ForEach-Object {
 
-            #Extracting exact values
+            #Removing clutter
+            Write-Verbose "Removing clutter "
             $Name = $_.Line -replace "^(.*?): " -replace "'"
             $Id = $_.Context.PostContext[0] -replace "^(.*?): "
             $InstanceId = $_.Context.PostContext[1] -replace "^(.*?): "
@@ -24,6 +26,7 @@ function Get-KPVSSWriter {
             $LastError = $_.Context.PostContext[3] -replace "^(.*?): "
 
             #Create object
+            Write-Verbose "Creating object"
             foreach ($Prop in $_) {
                 $Obj = [pscustomobject]@{
                     Name       = $Name
@@ -36,6 +39,7 @@ function Get-KPVSSWriter {
 
             #Change output based on Status provided
             If ($PSBoundParameters.ContainsKey('Status')) {
+                Write-Verbose "Filtering out the results"
                 $Obj | Where-Object { $_.State -like "*$Status" }
             } #if
             else {
@@ -48,7 +52,6 @@ function Get-KPVSSWriter {
 
     END { } #END
 
-
 }#function
 
 function Restart-KPVSSWriter {
@@ -60,9 +63,11 @@ function Restart-KPVSSWriter {
         $Name
     ) #Param
 
-    BEGIN { } #Begin
+    BEGIN { Write-Verbose "BEGIN: Restart-KPVSSWriter"} #BEGIN
 
     PROCESS {
+
+        Write-Verbose "Working on VSS Writer: $Name"
 
         Switch ($Name) {
             'ASR Writer' { $Service = 'VSS' }
@@ -93,6 +98,7 @@ function Restart-KPVSSWriter {
         } #Switch
 
         IF ($Service) {
+            Write-Verbose "Found matching service"
             $S = Get-Service -Name $Service
             Write-Host "Restarting service $(($S).DisplayName)"
             $S | Restart-Service -Force
