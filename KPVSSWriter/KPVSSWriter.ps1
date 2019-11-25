@@ -56,7 +56,7 @@ function Restart-KPVSSWriter {
 
     Param (
         [Parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True, Mandatory = $True)]
-        [String] 
+        [String[]] 
         $Name
     ) #Param
 
