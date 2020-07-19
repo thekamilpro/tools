@@ -1,3 +1,5 @@
+#Requires -RunAsAdministrator
+
 function Get-KPVSSWriter {
     [CmdletBinding()]
 
