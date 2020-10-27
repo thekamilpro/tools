@@ -4,7 +4,7 @@ function Get-KPVSSWriter {
     [CmdletBinding()]
 
     Param (
-        [ValidateSet('Stable', 'Failed')]
+        [ValidateSet('Stable', 'Failed', 'Waiting for completion')]
         [String] 
         $Status
     ) #Param
@@ -82,18 +82,25 @@ function Restart-KPVSSWriter {
             'FSRM writer' { $Service = 'srmsvc' }
             'IIS Config Writer' { $Service = 'AppHostSvc' }
             'IIS Metabase Writer' { $Service = 'IISADMIN' }
+            'Microsoft Exchange Replica Writer' { $Service = 'MSExchangeRepl' }
             'Microsoft Exchange Writer' { $Service = 'MSExchangeIS' }
             'Microsoft Hyper-V VSS Writer' { $Service = 'vmms' }
+            'MSMQ Writer (MSMQ)' { $Service = 'MSMQ' }
+            'MSSearch Service Writer' { $Service = 'WSearch' }
+            'NPS VSS Writer' { $Service = 'EventSystem' }
             'NTDS' { $Service = 'NTDS' }
             'OSearch VSS Writer' { $Service = 'OSearch' }
             'OSearch14 VSS Writer' { $Service = 'OSearch14' }
             'Registry Writer' { $Service = 'VSS' }
             'Shadow Copy Optimization Writer' { $Service = 'VSS' }
+            'SMS Writer' { $Service = 'SMS_SITE_VSS_WRITER' }
             'SPSearch VSS Writer' { $Service = 'SPSearch' }
             'SPSearch4 VSS Writer' { $Service = 'SPSearch4' }
             'SqlServerWriter' { $Service = 'SQLWriter' }
             'System Writer' { $Service = 'CryptSvc' }
             'TermServLicensing' { $Service = 'TermServLicensing' }
+            'WDS VSS Writer' { $Service = 'WDSServer' }
+            'WIDWriter' { $Service = 'WIDWriter' }
             'WINS Jet Writer' { $Service = 'WINS' }
             'WMI Writer' { $Service = 'Winmgmt' }
             default {$Null = $Service}
