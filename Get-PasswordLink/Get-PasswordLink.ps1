@@ -1,4 +1,4 @@
-#This is a very old script which works on top of Internet Explorer "clicking" buttons rather then using proper API
+#This is a very old script which works on top of Internet Explorer "clicking" buttons rather than using proper API
 #I have since created a proper module which is cross platform, uses rest api etc. You can it at
 # https://github.com/thekamilpro/kppwpush
 # You can also install new module with Install-Module -Name kppwpush
